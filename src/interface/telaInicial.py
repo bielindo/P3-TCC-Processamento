@@ -30,9 +30,9 @@ def exibir_selecao(janela, combo, listaTodos):
         janela.destroy()
 
         lista_distancias = distanciaMetros.valores_metros(listaTodos, selecionado)
-
+        print("Distancias: ", lista_distancias)
         lista_coordenadas = [[0,0,2],
-                             [3,0,0],
+                             [3,0,1],
                              [0,3,0],
                              [3,3,0]]
     

@@ -6,6 +6,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 def fecharJanela(janela):
     janela.quit()
     janela.destroy()
+    SystemExit()
 
 def criarResultado(nome_beacon, coordenadas):
     janela = tk.Tk()
@@ -17,7 +18,7 @@ def criarResultado(nome_beacon, coordenadas):
     ponto_y = coordenadas[1]
     ponto_z = coordenadas[2]
     nome_beacon_coordenada = f"{nome_beacon}({ponto_x:.2f}, {ponto_y:.2f}, {ponto_z:.2f})"
-    print(coordenadas)
+    print("Coordenadas: ", coordenadas)
     ax.scatter(ponto_x, ponto_y, ponto_z, color='green', s=70)
     ax.text(ponto_x, ponto_y, ponto_z, nome_beacon_coordenada, fontsize=8)
 

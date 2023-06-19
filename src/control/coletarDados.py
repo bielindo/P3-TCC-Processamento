@@ -2,8 +2,8 @@ from src.input import conexaoMQTT
 
 def agruparDados(topico):
     resultados = {}
-    #dados = conexaoMQTT.dadosMQTT(topico)
-    dados = topico
+    dados = conexaoMQTT.dadosMQTT(topico)
+    #dados = topico
     pares = dados.split("; ")
 
     for par in pares:
@@ -28,6 +28,17 @@ def beaconsExistente(lista_topico1, lista_topico2, lista_topico3, lista_topico4)
     nomes_comuns = list(nomes1.intersection(nomes2, nomes3, nomes4))
     
     return nomes_comuns
+
+def removerValores(lista_topico1, lista_topico2, lista_topico3, lista_topico4):
+ 
+    chaves_comuns = set(lista_topico1.keys()).intersection(lista_topico2.keys(), lista_topico3.keys(), lista_topico4.keys())
+
+    nova_lista_topico1 = {chave: lista_topico1[chave] for chave in chaves_comuns}
+    nova_lista_topico2 = {chave: lista_topico2[chave] for chave in chaves_comuns}
+    nova_lista_topico3 = {chave: lista_topico3[chave] for chave in chaves_comuns}
+    nova_lista_topico4 = {chave: lista_topico4[chave] for chave in chaves_comuns}
+
+    return nova_lista_topico1, nova_lista_topico2, nova_lista_topico3, nova_lista_topico4
 
 
 def lista(lista_topico1, lista_topico2, lista_topico3, lista_topico4):
