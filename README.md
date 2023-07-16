@@ -1,4 +1,4 @@
-# P3 - Projeto TCC - Processamento de Dados
+# P3 - Projeto TCC (Sistema de monitoramento e rastreamento de objetos indoor) - Processamento de Dados
 
 Este é o terceiro e último repositório do projeto de Trabalho de Conclusão de Curso (TCC) sobre localização indoor, intitulado "Processamento de Dados com Python". O objetivo deste projeto é demonstrar a aplicação de técnicas de processamento e análise de dados utilizando a linguagem de programação Python.
 
