@@ -1,28 +1,36 @@
 from src.interface import telaInicial
 from src.control import coletarDados
 
+#Classe para representar as listas de tópicos de dispositivos.
+class ListasTopicos:
+#Construtor da classe ListasTopicos.
+#:param listas: Dicionário com as listas de dispositivos, onde cada chave é o nome do tópico e o valor é uma lista de dispositivos.
+    def __init__(self, **listas):
+        self.listas = listas
+
 def main() -> int:
-        
-        lista_topico1 = coletarDados.agruparDados("dispositivo1")
-        lista_topico2 = coletarDados.agruparDados("dispositivo2")
-        lista_topico3 = coletarDados.agruparDados("dispositivo3")
-        lista_topico4 = coletarDados.agruparDados("dispositivo4")
 
-        #nomes = coletarDados.beaconsExistente(lista_topico1, lista_topico2, lista_topico3, lista_topico4)
-        #listatodos = coletarDados.lista(lista_topico1, lista_topico2, lista_topico3, lista_topico4)
+    # Coleta dos dados para os tópicos de dispositivos
+    lista_topico1 = coletarDados.agruparDados("dispositivo1")
+    lista_topico2 = coletarDados.agruparDados("dispositivo2")
+    lista_topico3 = coletarDados.agruparDados("dispositivo3")
+    lista_topico4 = coletarDados.agruparDados("dispositivo4")
 
-        #lista_topico1 = coletarDados.agruparDados("segundoBeacon, -66; primeiroBeacon, -68; ")
-        #lista_topico2 = coletarDados.agruparDados("segundoBeacon, -68; primeiroBeacon, -78; ")
-        #lista_topico3 = coletarDados.agruparDados("segundoBeacon, -56; primeiroBeacon, -56; ")
-        #lista_topico4 = coletarDados.agruparDados("segundoBeacon, -63; primeiroBeacon, -67; ")
+    # Criação do objeto receptores para armazenar as listas de dispositivos
+    receptores = ListasTopicos(lista_topico1=lista_topico1, lista_topico2=lista_topico2, lista_topico3=lista_topico3, lista_topico4=lista_topico4)
 
-        nomes = coletarDados.beaconsExistente(lista_topico1, lista_topico2, lista_topico3, lista_topico4)
-        lista_iguais_1, lista_iguais_2, lista_iguais_3, lista_iguais_4 = coletarDados.removerValores(lista_topico1, lista_topico2, lista_topico3, lista_topico4)
-        listaTodos = coletarDados.lista(lista_iguais_1, lista_iguais_2, lista_iguais_3, lista_iguais_4)
-        print(listaTodos)
-        telaInicial.criarTela(nomes, listaTodos)
+    # Obtém os nomes comuns dos dispositivos presentes em todas as listas
+    nomes = coletarDados.beaconsExistente(receptores)
 
-        return 0
+    # Remove os dispositivos que não estão presentes em todas as listas
+    listas_iguais = coletarDados.removerValores(receptores)
+
+    # Cria a lista de frequências para cada dispositivo presente nas listas
+    listaTodos = coletarDados.lista(listas_iguais)
+
+    telaInicial.criarTela(nomes, listaTodos)
+
+    return 0
 
 if __name__ == "__main__":
-        exit(main())
+    exit(main())

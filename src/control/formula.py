@@ -1,17 +1,30 @@
 import numpy as np
 
 
+"""
+Aplica a fórmula geral para estimar as coordenadas tridimensionais a partir de distâncias e coordenadas trilaterais.
+
+:param lista_coordenadas: Uma lista contendo as coordenadas trilaterais dos pontos de referência em um espaço tridimensional.
+:param lista_distancias: Uma lista contendo as distâncias medidas a partir de um dispositivo em relação aos pontos de referência.
+:return: Um array numpy contendo as coordenadas estimadas tridimensionais do dispositivo.
+"""
 def formulaGeral(lista_coordenadas, lista_distancias):
     A = calcular_A(lista_coordenadas)
     K = calcular_K(lista_coordenadas, lista_distancias)
     matrizCompleta = np.concatenate((A, K), axis=1)
     coeficientes = matrizCompleta[:, :-1]
     resultados = matrizCompleta[:, -1]
-    print(matrizCompleta)
-    coodenadas = np.linalg.lstsq(coeficientes, resultados, rcond=None)[0]
+    coordenadas = np.linalg.lstsq(coeficientes, resultados, rcond=None)[0]
 
-    return coodenadas
+    return coordenadas
 
+"""
+Calcula a matriz K para o sistema de equações da fórmula geral.
+
+:param lista_coordenadas: Uma lista contendo as coordenadas trilaterais dos pontos de referência em um espaço tridimensional.
+:param lista_distancias: Uma lista contendo as distâncias medidas a partir de um dispositivo em relação aos pontos de referência.
+:return: Uma matriz numpy contendo os valores K para o sistema de equações.
+"""
 def calcular_K(lista_coordenadas, lista_distancias):
     resultados = []
     for i in range(len(lista_coordenadas)):
@@ -29,7 +42,12 @@ def calcular_K(lista_coordenadas, lista_distancias):
     matriz_resultados = np.array(resultados)
     return matriz_resultados
 
+"""
+Calcula a matriz A para o sistema de equações da fórmula geral.
 
+:param lista_coordenadas: Uma lista contendo as coordenadas trilaterais dos pontos de referência em um espaço tridimensional.
+:return: Uma matriz numpy contendo os valores A para o sistema de equações.
+"""
 def calcular_A(lista_coordenadas):
     resultados = []
     for i in range(len(lista_coordenadas)):

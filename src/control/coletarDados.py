@@ -1,9 +1,15 @@
 from src.input import conexaoMQTT
 
+
+"""
+Agrupa os dados recebidos de um tópico MQTT.
+
+:param topico: O tópico MQTT do qual os dados serão agrupados.
+:return: Um dicionário contendo os dados agrupados, onde as chaves são os nomes dos dispositivos e os valores são listas de frequências.
+"""
 def agruparDados(topico):
     resultados = {}
     dados = conexaoMQTT.dadosMQTT(topico)
-    #dados = topico
     pares = dados.split("; ")
 
     for par in pares:
@@ -14,42 +20,53 @@ def agruparDados(topico):
                 resultados[nome].append(frequencia)
             else:
                 resultados[nome] = [frequencia]
-    print(f"valore: {resultados}")
 
     return resultados
 
+"""
+Obtém os nomes comuns de dispositivos presentes em todas as listas.
 
-def beaconsExistente(lista_topico1, lista_topico2, lista_topico3, lista_topico4):
-    nomes1 = set(lista_topico1.keys())
-    nomes2 = set(lista_topico2.keys())
-    nomes3 = set(lista_topico3.keys())
-    nomes4 = set(lista_topico4.keys())
+:param receptores: Um objeto contendo as listas de dispositivos.
+:return: Uma lista com os nomes comuns de dispositivos presentes em todas as listas.
+"""
+def beaconsExistente(receptores):
+    nomes_comuns = set(receptores.listas[list(receptores.listas.keys())[0]].keys())
+    for lista in list(receptores.listas.values())[1:]:
+        nomes_comuns.intersection_update(lista.keys())
 
-    nomes_comuns = list(nomes1.intersection(nomes2, nomes3, nomes4))
-    
-    return nomes_comuns
+    return list(nomes_comuns)
 
-def removerValores(lista_topico1, lista_topico2, lista_topico3, lista_topico4):
- 
-    chaves_comuns = set(lista_topico1.keys()).intersection(lista_topico2.keys(), lista_topico3.keys(), lista_topico4.keys())
+"""
+Remove os valores de dispositivos que não estão presentes em todas as listas.
 
-    nova_lista_topico1 = {chave: lista_topico1[chave] for chave in chaves_comuns}
-    nova_lista_topico2 = {chave: lista_topico2[chave] for chave in chaves_comuns}
-    nova_lista_topico3 = {chave: lista_topico3[chave] for chave in chaves_comuns}
-    nova_lista_topico4 = {chave: lista_topico4[chave] for chave in chaves_comuns}
+:param receptores: Um objeto contendo as listas de dispositivos.
+:return: Uma lista de dicionários contendo as listas de dispositivos com os valores iguais entre elas.
+"""
+def removerValores(receptores):
+    chaves_comuns = set(receptores.listas[list(receptores.listas.keys())[0]].keys())
+    for lista in list(receptores.listas.values())[1:]:
+        chaves_comuns.intersection_update(lista.keys())
 
-    return nova_lista_topico1, nova_lista_topico2, nova_lista_topico3, nova_lista_topico4
+    listas_iguais = []
+    for lista in receptores.listas.values():
+        lista_igual = {chave: lista[chave] for chave in chaves_comuns}
+        listas_iguais.append(lista_igual)
 
+    return listas_iguais
 
-def lista(lista_topico1, lista_topico2, lista_topico3, lista_topico4):
+"""
+Cria uma lista com as frequências de dispositivos presentes nas listas.
+
+:param listas_iguais: Uma lista de dicionários contendo as listas de dispositivos com valores iguais entre elas.
+:return: Uma lista contendo as frequências de dispositivos presentes nas listas.
+"""
+def lista(listas_iguais):
     lista_todos = []
 
-    for dispositivo in lista_topico1:
-        frequencias = [lista_topico1[dispositivo], lista_topico2[dispositivo],
-                    lista_topico3[dispositivo], lista_topico4[dispositivo]]
+    dispositivos_comuns = listas_iguais[0].keys()
+
+    for dispositivo in dispositivos_comuns:
+        frequencias = [lista[dispositivo] for lista in listas_iguais]
         lista_todos.append((dispositivo, frequencias))
 
     return lista_todos
-
-
-
