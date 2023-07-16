@@ -27,7 +27,7 @@ Para executar o projeto, você precisa ter instalado os seguintes componentes:
 
 1. Clone este repositório em sua máquina local:
 
-    git clone https://github.com/seu-usuario/tcc-processamento.git
+    git clone [https://github.com/seu-usuario/tcc-processamento.git](https://github.com/bielindo/tcc-processamento.git)
 
 2. Instale as bibliotecas necessárias utilizando o pip:
 
