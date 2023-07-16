@@ -27,19 +27,19 @@ Para executar o projeto, você precisa ter instalado os seguintes componentes:
 
 1. Clone este repositório em sua máquina local:
 
-  git clone https://github.com/seu-usuario/tcc-processamento.git
+    git clone https://github.com/seu-usuario/tcc-processamento.git
 
 2. Instale as bibliotecas necessárias utilizando o pip:
 
-  pip install numpy matplotlib
+    pip install numpy matplotlib
 
 3. Navegue até o diretório do projeto:
 
-  cd tcc-processamento
+    cd tcc-processamento
 
 4. Execute o arquivo `main.py` para iniciar o programa:
 
-  python main.py
+    python main.py
 
 
 A interface gráfica será aberta, e você poderá interagir com as diferentes funcionalidades do projeto.
