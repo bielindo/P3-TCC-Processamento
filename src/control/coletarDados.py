@@ -66,7 +66,7 @@ def lista(listas_iguais):
     dispositivos_comuns = listas_iguais[0].keys()
 
     for dispositivo in dispositivos_comuns:
-        frequencias = [lista[dispositivo] for lista in listas_iguais]
-        lista_todos.append((dispositivo, frequencias))
+        potencias = [lista[dispositivo] for lista in listas_iguais]
+        lista_todos.append((dispositivo, potencias))
 
     return lista_todos
