@@ -15,11 +15,11 @@ def agruparDados(topico):
     for par in pares:
         valores = par.strip().split(", ")
         if len(valores) == 2:
-            nome, frequencia = valores
+            nome, pontencia = valores
             if nome in resultados:
-                resultados[nome].append(frequencia)
+                resultados[nome].append(potencia)
             else:
-                resultados[nome] = [frequencia]
+                resultados[nome] = [potencia]
 
     return resultados
 
