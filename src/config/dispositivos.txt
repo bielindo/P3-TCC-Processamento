@@ -1,0 +1,4 @@
+"dispositivo1": (0,0,2)
+"dispositivo2": (3,0,1)
+"dispositivo3": (0,3,1)
+"dispositivo4": (3,3,1)

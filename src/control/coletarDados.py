@@ -15,7 +15,7 @@ def agruparDados(topico):
     for par in pares:
         valores = par.strip().split(", ")
         if len(valores) == 2:
-            nome, pontencia = valores
+            nome, potencia = valores
             if nome in resultados:
                 resultados[nome].append(potencia)
             else:
@@ -30,9 +30,15 @@ Obtém os nomes comuns de dispositivos presentes em todas as listas.
 :return: Uma lista com os nomes comuns de dispositivos presentes em todas as listas.
 """
 def beaconsExistente(receptores):
-    nomes_comuns = set(receptores.listas[list(receptores.listas.keys())[0]].keys())
-    for lista in list(receptores.listas.values())[1:]:
-        nomes_comuns.intersection_update(lista.keys())
+    # Cria uma lista de dicionários com os dados dos dispositivos
+    lista_dados_dispositivos = [receptor.dados for receptor in receptores]
+
+    # Inicializa o conjunto de nomes comuns com os tópicos do primeiro dispositivo
+    nomes_comuns = set(lista_dados_dispositivos[0].keys())
+
+    # Itera sobre os demais dispositivos e mantém apenas os tópicos em comum
+    for dados_dispositivo in lista_dados_dispositivos[1:]:
+        nomes_comuns.intersection_update(dados_dispositivo.keys())
 
     return list(nomes_comuns)
 
@@ -43,14 +49,18 @@ Remove os valores de dispositivos que não estão presentes em todas as listas.
 :return: Uma lista de dicionários contendo as listas de dispositivos com os valores iguais entre elas.
 """
 def removerValores(receptores):
-    chaves_comuns = set(receptores.listas[list(receptores.listas.keys())[0]].keys())
-    for lista in list(receptores.listas.values())[1:]:
-        chaves_comuns.intersection_update(lista.keys())
+    # Cria uma lista de dicionários com os dados dos dispositivos
+    lista_dados_dispositivos = criar_lista_dados_dispositivos(receptores)
 
-    listas_iguais = []
-    for lista in receptores.listas.values():
-        lista_igual = {chave: lista[chave] for chave in chaves_comuns}
-        listas_iguais.append(lista_igual)
+    # Inicializa o conjunto de chaves comuns com os tópicos do primeiro dispositivo
+    chaves_comuns = set(lista_dados_dispositivos[0].keys())
+
+    # Itera sobre os demais dispositivos e mantém apenas os tópicos em comum
+    for dados_dispositivo in lista_dados_dispositivos[1:]:
+        chaves_comuns.intersection_update(dados_dispositivo.keys())
+
+    # Cria uma lista de dicionários com os valores em comum de todos os dispositivos
+    listas_iguais = [{chave: dados_dispositivo[chave] for chave in chaves_comuns} for dados_dispositivo in lista_dados_dispositivos]
 
     return listas_iguais
 
@@ -70,3 +80,7 @@ def lista(listas_iguais):
         lista_todos.append((dispositivo, potencias))
 
     return lista_todos
+
+# Função para criar uma lista de dicionários com os dados dos dispositivos
+def criar_lista_dados_dispositivos(receptores):
+    return [receptor.dados for receptor in receptores]
